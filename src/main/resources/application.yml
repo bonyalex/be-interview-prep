@@ -10,6 +10,13 @@ spring:
   h2:
     console:
       enabled: false
+app:
+  jwt:
+    secret: ${JWT_SECRET:}
+    expiry: PT15M
+  admin:
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
 server:
   port: ${PORT:8080}
 management:
