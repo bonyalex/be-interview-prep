@@ -11,18 +11,28 @@ import com.example.beinterviewprep.dto.UrlStatsResponse;
 import com.example.beinterviewprep.entity.ShortUrl;
 import com.example.beinterviewprep.exception.ResourceExpiredException;
 import com.example.beinterviewprep.exception.ResourceNotFoundException;
+import com.example.beinterviewprep.security.JsonSecurityErrorHandler;
+import com.example.beinterviewprep.service.JwtService;
 import com.example.beinterviewprep.service.UrlShortenerService;
 import java.time.Instant;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(UrlShortenerController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class UrlShortenerControllerTest {
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private JsonSecurityErrorHandler errorHandler;
 
     @Autowired
     private MockMvc mockMvc;
