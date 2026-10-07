@@ -1,0 +1,35 @@
+meta {
+  name: Place order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/orders
+  body: json
+  auth: bearer
+}
+
+headers {
+  Idempotency-Key: {{idempotencyKey}}
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "items": [
+      { "productId": {{productId}}, "quantity": 2 }
+    ]
+  }
+}
+
+vars:post-response {
+  orderId: res.body.id
+}
+
+docs {
+  Set idempotencyKey in the environment or a pre-request var; sending the same value again returns the same order.
+}

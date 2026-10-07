@@ -1,0 +1,24 @@
+meta {
+  name: Update task
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/tasks/{{taskId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Write the report",
+    "description": "First draft",
+    "status": "IN_PROGRESS",
+    "dueDate": "2030-01-31"
+  }
+}

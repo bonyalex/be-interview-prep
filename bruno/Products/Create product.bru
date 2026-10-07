@@ -1,0 +1,29 @@
+meta {
+  name: Create product
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/products
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "Desk lamp",
+    "category": "Home",
+    "price": 24.99,
+    "stock": 10,
+    "rating": 4.5
+  }
+}
+
+vars:post-response {
+  productId: res.body.id
+}

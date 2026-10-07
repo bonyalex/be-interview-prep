@@ -1,0 +1,15 @@
+meta {
+  name: URL stats
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/urls/{{code}}/stats
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

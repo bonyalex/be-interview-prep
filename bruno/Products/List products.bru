@@ -1,0 +1,26 @@
+meta {
+  name: List products
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/products
+  body: none
+  auth: bearer
+}
+
+params:query {
+  page: 0
+  size: 20
+  sort: price,desc
+  category: Books
+  minPrice: 10
+  maxPrice: 400
+  inStockOnly: true
+  search: product
+}
+
+auth:bearer {
+  token: {{token}}
+}

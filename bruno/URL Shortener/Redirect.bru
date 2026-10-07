@@ -1,0 +1,19 @@
+meta {
+  name: Redirect
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/{{code}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+docs {
+  Returns 302; disable redirect following to see the Location header.
+}

@@ -1,0 +1,19 @@
+meta {
+  name: List tasks
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/tasks
+  body: none
+  auth: bearer
+}
+
+params:query {
+  status: TO_DO
+}
+
+auth:bearer {
+  token: {{token}}
+}
