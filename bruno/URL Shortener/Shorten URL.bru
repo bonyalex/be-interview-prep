@@ -1,0 +1,26 @@
+meta {
+  name: Shorten URL
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/urls
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "url": "https://example.com/some/long/path",
+    "expiresAt": "2030-01-01T00:00:00Z"
+  }
+}
+
+vars:post-response {
+  code: res.body.code
+}

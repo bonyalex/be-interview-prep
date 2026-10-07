@@ -1,0 +1,28 @@
+meta {
+  name: Create task
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/tasks
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Write the report",
+    "description": "First draft",
+    "status": "TO_DO",
+    "dueDate": "2030-01-31"
+  }
+}
+
+vars:post-response {
+  taskId: res.body.id
+}

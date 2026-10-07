@@ -1,0 +1,25 @@
+meta {
+  name: Update product
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/products/{{productId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name": "Desk lamp",
+    "category": "Home",
+    "price": 19.99,
+    "stock": 10,
+    "rating": 4.5
+  }
+}
