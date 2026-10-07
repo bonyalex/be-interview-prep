@@ -35,7 +35,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling ->
                         handling.authenticationEntryPoint(errorHandler).accessDeniedHandler(errorHandler))
-                .authorizeHttpRequests(requests -> requests.requestMatchers("/api/auth/**", "/actuator/health")
+                .authorizeHttpRequests(requests -> requests.requestMatchers(
+                                "/api/auth/**", "/actuator/health", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users")
                         .hasRole(Role.ADMIN.name())

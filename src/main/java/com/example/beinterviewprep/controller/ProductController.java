@@ -1,5 +1,7 @@
 package com.example.beinterviewprep.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.example.beinterviewprep.dto.PageResponse;
 import com.example.beinterviewprep.dto.ProductFilter;
 import com.example.beinterviewprep.dto.ProductRequest;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Products")
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -31,11 +34,13 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a product")
     public ProductResponse create(@Valid @RequestBody ProductRequest request) {
         return productService.create(request);
     }
 
     @GetMapping
+    @Operation(summary = "List products with filters, paging and sorting")
     public PageResponse<ProductResponse> list(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) BigDecimal minPrice,
@@ -48,17 +53,20 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get a product by id")
     public ProductResponse get(@PathVariable Long id) {
         return productService.get(id);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Replace a product")
     public ProductResponse update(@PathVariable Long id, @Valid @RequestBody ProductRequest request) {
         return productService.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a product")
     public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
