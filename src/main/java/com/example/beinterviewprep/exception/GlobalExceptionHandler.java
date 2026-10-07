@@ -1,9 +1,12 @@
 package com.example.beinterviewprep.exception;
 
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +51,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiError> handleUnreadable(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        return build(HttpStatus.BAD_REQUEST, "Malformed request body", request, List.of());
+        List<String> details = ex.getCause() instanceof InvalidFormatException invalidFormat
+                ? List.of(fieldName(invalidFormat) + ": invalid value '" + invalidFormat.getValue() + "'")
+                : List.of();
+        return build(HttpStatus.BAD_REQUEST, "Malformed request body", request, details);
+    }
+
+    private String fieldName(InvalidFormatException ex) {
+        return ex.getPath().stream().map(Reference::getFieldName).collect(Collectors.joining("."));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

@@ -47,6 +47,24 @@ class TaskControllerTest {
     }
 
     @Test
+    void createWithInvalidStatusInBodyReturns400WithFieldDetail() throws Exception {
+        String body = "{\"title\":\"Task\",\"status\":\"BOGUS\"}";
+
+        mockMvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.details[0]").value("status: invalid value 'BOGUS'"));
+    }
+
+    @Test
+    void createWithMalformedDueDateReturns400WithFieldDetail() throws Exception {
+        String body = "{\"title\":\"Task\",\"dueDate\":\"not-a-date\"}";
+
+        mockMvc.perform(post("/api/tasks").contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.details[0]").value("dueDate: invalid value 'not-a-date'"));
+    }
+
+    @Test
     void getUnknownTaskReturns404InErrorShape() throws Exception {
         when(taskService.get(99L)).thenThrow(new ResourceNotFoundException("Task 99 not found"));
 
