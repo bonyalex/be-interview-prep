@@ -27,6 +27,11 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.NOT_FOUND, ex.getMessage(), request, List.of());
     }
 
+    @ExceptionHandler(ResourceExpiredException.class)
+    public ResponseEntity<ApiError> handleExpired(ResourceExpiredException ex, HttpServletRequest request) {
+        return build(HttpStatus.GONE, ex.getMessage(), request, List.of());
+    }
+
     @ExceptionHandler(BusinessRuleException.class)
     public ResponseEntity<ApiError> handleBusinessRule(BusinessRuleException ex, HttpServletRequest request) {
         return build(HttpStatus.CONFLICT, ex.getMessage(), request, List.of());
